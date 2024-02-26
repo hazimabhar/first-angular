@@ -2,56 +2,25 @@ import { Injectable } from '@angular/core';
 import { HousingLocation } from '../interfaces/housing-location';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HousingService {
 
-  readonly baseUrl = 'https://angular.io/assets/images/tutorials/faa';
+  url = 'http://localhost:3000/locations'
 
-  protected housingLocationList : HousingLocation[] = [
-    {
-      id: 0,
-      name: 'Test Home',
-      city: 'Test city',
-      state: 'ST',
-      photo: `${this.baseUrl}/example-house.jpg`,
-      availableUnits: 99,
-      wifi: true,
-      laundry: false,
-    },
-    {
-      id: 1,
-      name: 'Test House',
-      city: 'Test Test',
-      state: 'TS',
-      photo: `${this.baseUrl}/example-house.jpg`,
-      availableUnits: 120,
-      wifi: true,
-      laundry: true,
-    },
-    {
-      id: 2,
-      name: 'Test 123',
-      city: 'Test TesTest',
-      state: 'LB',
-      photo: `${this.baseUrl}/example-house.jpg`,
-      availableUnits: 140,
-      wifi: false,
-      laundry: true,
-    },
+  constructor() {}
 
-  ]
-
-  constructor() { }
-
-  getAllHousingLocations() : HousingLocation[]{
-    return this.housingLocationList
+  async getAllHousingLocations(): Promise<HousingLocation[]> {
+    const data = await fetch(this.url)
+    return await data.json() ?? []
   }
 
-  getHousingLocationById(id:Number): HousingLocation | undefined {
-    return this.housingLocationList.find
-    (
-      housingLocation => housingLocation.id === id
-    )
+  async getHousingLocationById(id: Number): Promise <HousingLocation | undefined> {
+      const data = await fetch(`${this.url}/${id}`)
+      return await data.json() ?? []
+  }
+
+  submitApplication(firstName: string, lastName: string, email: string) {
+    console.log(firstName, lastName, email);
   }
 }

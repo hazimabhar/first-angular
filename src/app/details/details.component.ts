@@ -26,8 +26,8 @@ export class DetailsComponent {
     const housingLocationId = Number(this.route.snapshot.params['id']);
 
     this.housingLocationService.getHousingLocationById(housingLocationId)
-    .then((housingLocation)=>{
-      this.housingLocation = housingLocation
+    .subscribe((response:any)=>{
+      this.housingLocation = response
     })
 
   }

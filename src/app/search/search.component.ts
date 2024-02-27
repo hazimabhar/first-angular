@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 import { HousingLocation } from '../interfaces/housing-location';
 import { HousingService } from '../services/housing.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CommonModule, HousingLocationComponent],
+  imports: [CommonModule, HousingLocationComponent,HttpClientModule],
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css'],
 })
@@ -21,10 +22,10 @@ export class SearchComponent {
   constructor() {
     this.housingService
       .getAllHousingLocations()
-      .then((response: HousingLocation[]) => {
-        this.housingLocationList = response;
-        this.filteredLocationList = response;
-      });
+      .subscribe((response:any)=>{
+        this.housingLocationList=response
+        this.filteredLocationList=response
+      })
   }
 
   filterResult(filter: string) {
